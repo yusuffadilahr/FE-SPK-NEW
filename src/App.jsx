@@ -2,7 +2,10 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./page/dashboard";
 import Kategori from "./page/kategori";
-import ProdukKategori1 from "./page/produk/produk-kategori-1";
+import Produk_Katalog_1 from "./page/produk/produk-katalog-1";
+import Produk_Katalog_2 from "./page/produk/produk-katalog-2";
+import Produk_Katalog_3 from "./page/produk/produk-katalog-3";
+import Produk_Katalog_4 from "./page/produk/produk-katalog-4";
 
 const App = () => {
     return (
@@ -16,10 +19,16 @@ const App = () => {
                     <Kategori />
                 } />
                 <Route path="/kategori/1" element={
-                    <ProdukKategori1 />
+                    <Produk_Katalog_1 />
                 } />
                 <Route path="/kategori/2" element={
-                    <ProdukKategori1 />
+                    <Produk_Katalog_2 />
+                } />
+                <Route path="/kategori/3" element={
+                    <Produk_Katalog_3 />
+                } />
+                <Route path="/kategori/4" element={
+                    <Produk_Katalog_4 />
                 } />
             </Routes>
         </Router>

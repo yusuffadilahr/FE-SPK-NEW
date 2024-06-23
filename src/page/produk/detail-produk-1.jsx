@@ -3,7 +3,7 @@ import 'bulma/css/bulma.css';
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const ProdukKategori1 = () => {
+const DetailProduk = () => {
     const { id_product } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -101,4 +101,4 @@ const ProdukKategori1 = () => {
     );
 }
 
-export default ProdukKategori1;
+export default DetailProduk;

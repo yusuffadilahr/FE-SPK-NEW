@@ -27,7 +27,7 @@ const Dashboard = () => {
         <div style={containerStyle}>
             <div className={animate ? "animate" : ""}>
                 <p style={{
-                    fontSize: "90px",
+                    fontSize: "60px",
                     fontWeight: "bold",
                     marginBottom: "20px",
                     color: "#000000"
