@@ -2,34 +2,17 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./page/dashboard";
 import Kategori from "./page/kategori";
-import Produk_Katalog_1 from "./page/produk/produk-katalog-1";
-import Produk_Katalog_2 from "./page/produk/produk-katalog-2";
-import Produk_Katalog_3 from "./page/produk/produk-katalog-3";
-import Produk_Katalog_4 from "./page/produk/produk-katalog-4";
+import Produk_Katalog from "./page/produk/Produk-Katalog";
+import Detail_Produk from "./page/produk/Detail-Product";
 
 const App = () => {
     return (
-
         <Router>
             <Routes>
-                <Route path="/" element={
-                    <Dashboard />
-                } />
-                <Route path="/kategori" element={
-                    <Kategori />
-                } />
-                <Route path="/kategori/1" element={
-                    <Produk_Katalog_1 />
-                } />
-                <Route path="/kategori/2" element={
-                    <Produk_Katalog_2 />
-                } />
-                <Route path="/kategori/3" element={
-                    <Produk_Katalog_3 />
-                } />
-                <Route path="/kategori/4" element={
-                    <Produk_Katalog_4 />
-                } />
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/kategori" element={<Kategori />} />
+                <Route path="/kategori/:id_kategori" element={<Produk_Katalog />} />
+                <Route path="/produk/:id_produk" element={<Detail_Produk />} />
             </Routes>
         </Router>
     );

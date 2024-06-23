@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import 'bulma/css/bulma.css';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 
-const Produk_Katalog_1 = () => {
+const Produk_Katalog = () => {
+    const { id_kategori } = useParams();
     const [kategoriProduk, setKategoriProduk] = useState([]);
     const navigate = useNavigate();
     const [animate, setAnimate] = useState(false);
@@ -11,17 +12,23 @@ const Produk_Katalog_1 = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/api-v1/product/kategori/1'); // Pastikan mengganti '1' dengan ID kategori yang sesuai
-                console.log('Response data:', response.data); // Logging data respons API
-                setKategoriProduk(response.data.data); // Mengakses properti 'data' dari respons
+                const response = await axios.get(`http://localhost:3001/api-v1/product/kategori/${id_kategori}`);
+                if (response.data.data.length === 0) {
+                    throw new Error('Kategori tidak ditemukan');
+                }
+                console.log('Response data:', response.data);
+                setKategoriProduk(response.data.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
+                // Mengarahkan ke kategori berikutnya jika terjadi kesalahan
+                const nextId = parseInt(id_kategori, 10) + 1;
+                navigate(`/kategori/${nextId}`);
             }
         };
 
         fetchData();
         setAnimate(true);
-    }, []);
+    }, [id_kategori, navigate]);
 
     const containerStyle = {
         minHeight: "100vh",
@@ -30,7 +37,8 @@ const Produk_Katalog_1 = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        textAlign: "center"
+        textAlign: "center",
+        position: "relative"
     };
 
     const cardStyle = {
@@ -50,6 +58,12 @@ const Produk_Katalog_1 = () => {
             <Link to="/kategori" style={{ position: "absolute", top: "20px", left: "20px", textDecoration: "none", color: "#000000" }}>
                 <i className="fas fa-arrow-left" style={{ marginRight: "5px" }}></i> Back
             </Link>
+            <button onClick={() => navigate('/rekomendasi')} className="button is-black" style={{ 
+                position: "absolute",
+                top: "60px",
+                right: "40px" }}>
+                Rekomendasi Produk
+            </button>
             <div className={animate ? "animate" : ""}>
                 <p style={{
                     fontSize: "60px",
@@ -57,12 +71,6 @@ const Produk_Katalog_1 = () => {
                     marginBottom: "20px",
                     color: "#000000"
                 }}>Ini Produk Katalog</p>
-                <button onClick={() => navigate('/rekomendasi')} className="button is-black" style={{ 
-                    position: "absolute",
-                    top: "60px",
-                    right: "40px" }}>
-                    Rekomendasi Produk
-                </button>
                 <div className="columns is-multiline is-centered">
                     {kategoriProduk.length > 0 ? (
                         kategoriProduk.map((produk) => (
@@ -72,13 +80,13 @@ const Produk_Katalog_1 = () => {
                                         <div className="card-image">
                                             <figure className="image is-4by3">
                                                 <img src={produk.link_img} alt={produk.nama_product} onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/300'; }} />
-                                                {console.log('Image URL:', produk.link_img)} {/* Logging URL gambar */}
+                                                {console.log('Image URL:', produk.link_img)}
                                             </figure>
                                         </div>
                                         <div className="card-content" style={cardContentStyle}>
                                             <div className="media">
                                                 <div className="media-content">
-                                                    <p className="title is-4 is-size-5-mobile">{produk.nama_product}</p> {/* Menggunakan is-size-5 untuk teks nama produk */}
+                                                    <p className="title is-4 is-size-5-mobile">{produk.nama_product}</p>
                                                     <p className="subtitle is-6">{produk.brand}</p>
                                                 </div>
                                             </div>
@@ -110,4 +118,4 @@ const Produk_Katalog_1 = () => {
     );
 }
 
-export default Produk_Katalog_1;
+export default Produk_Katalog;
